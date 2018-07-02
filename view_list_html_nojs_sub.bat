@@ -9,7 +9,6 @@ goto eof
 echo ^<a href="%~1\%outputfile%"^>%~1^</a^>^<br^>  >> %outputfile%
 setlocal
 cd %1
-rem if exist %outputfile% (goto eof)
 call :genhtml
 endlocal
 goto eof
@@ -18,13 +17,11 @@ goto eof
 call :htmlhead
 for /d %%d in (*) do call :forloop "%%d"
 call :imgtagging
-::for %%i in (*.webm,*.mp4,*.mov) do @echo '%%i',  >> %outputfile%
 call :videotagging
 call :htmltale
 goto eof
 
 :videotagging
-::for %%i in (*.webm,*.mp4) call :videotagging "%%d"
 for %%i in (*.webm) do echo ^<video controls^>^<source src="%%i" type="video/webm"^>^</video^>^<br^>  >> %outputfile%
 for %%i in (*.mp4) do echo ^<video controls^>^<source src="%%i" type="video/mp4"^>^</video^>^<br^>  >> %outputfile%
 goto eof
